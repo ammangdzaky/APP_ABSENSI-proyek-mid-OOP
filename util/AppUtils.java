@@ -62,5 +62,19 @@ public class AppUtils {
         }
     }
 
+    // === Other Utilities ===
+    public static void pressEnterToContinue() {
+        System.out.print("\nPress Enter to continue...");
+        scanner.nextLine();
+    }
 
+    public static int getValidIntInput(String prompt, int min, int max) {
+        while (true) {
+            int input = getValidIntInput(prompt);
+            if (input >= min && input <= max) {
+                return input;
+            }
+            System.out.println("Error: Masukkan angka antara " + min + "-" + max + "!");
+        }
+    }
 }
