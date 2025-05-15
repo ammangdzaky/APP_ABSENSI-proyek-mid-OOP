@@ -105,5 +105,32 @@ public class Main {
                 default -> System.out.println("Pilihan tidak valid!");
             }
         }
+
+        private static void handleMahasiswaLogin() {
+            AppUtils.clearScreen();
+            System.out.println("=== LOGIN MAHASISWA ===");
+            userLoggedIn = AuthService.login(AppUtils.scanner);
+
+            if (userLoggedIn instanceof Mahasiswa) {
+                MahasiswaService mhsService = new MahasiswaService((Mahasiswa) userLoggedIn);
+                showMahasiswaMenu(mhsService);
+            } else {
+                System.out.println("Login gagal! Cek kredensial.");
+                AppUtils.pressEnterToContinue();
+        }
+    }
+
+     private static void handleMahasiswaSignUp() {
+        AppUtils.clearScreen();
+        System.out.println("=== SIGN UP MAHASISWA ===");
+
+        try {
+            AuthService.signUpMahasiswa(scanner);
+            System.out.println("✅ Pendaftaran berhasil! Silakan login.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("❌ Gagal: " + e.getMessage());
+        }
+
+        AppUtils.pressEnterToContinue();
     }
 
