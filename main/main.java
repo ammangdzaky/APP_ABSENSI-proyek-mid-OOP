@@ -79,3 +79,31 @@ public class Main {
         }
     }
 }
+
+    // ===== MAHASISWA HANDLER =====
+    private static void handleMahasiswaAuth() {
+        while (true) {
+            AppUtils.clearScreen();
+            System.out.println("""
+            \n\n=== MAHASISWA ===
+            1. Login
+            2. Sign Up
+            3. Kembali
+            """);
+
+            int choice = AppUtils.getValidIntInput("Pilih menu: ");
+            switch (choice) {
+                case 1 -> {
+                    handleMahasiswaLogin();
+                    return; // Kembali ke main menu setelah login
+                }
+                case 2 -> {
+                    handleMahasiswaSignUp();
+                    // Tetap di menu ini setelah sign up
+                }
+                case 3 -> { return; } // Kembali ke main menu
+                default -> System.out.println("Pilihan tidak valid!");
+            }
+        }
+    }
+
