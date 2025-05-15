@@ -18,6 +18,7 @@ public class Main {
         showMainMenu();
     }
 
+
     private static void showMainMenu() throws IOException {
         while (true) {
             AppUtils.clearScreen();
@@ -78,7 +79,6 @@ public class Main {
             }
         }
     }
-}
 
     // ===== MAHASISWA HANDLER =====
     private static void handleMahasiswaAuth() {
@@ -105,18 +105,19 @@ public class Main {
                 default -> System.out.println("Pilihan tidak valid!");
             }
         }
+    }
 
-        private static void handleMahasiswaLogin() {
-            AppUtils.clearScreen();
-            System.out.println("=== LOGIN MAHASISWA ===");
-            userLoggedIn = AuthService.login(AppUtils.scanner);
+    private static void handleMahasiswaLogin() {
+        AppUtils.clearScreen();
+        System.out.println("=== LOGIN MAHASISWA ===");
+        userLoggedIn = AuthService.login(AppUtils.scanner);
 
-            if (userLoggedIn instanceof Mahasiswa) {
-                MahasiswaService mhsService = new MahasiswaService((Mahasiswa) userLoggedIn);
-                showMahasiswaMenu(mhsService);
-            } else {
-                System.out.println("Login gagal! Cek kredensial.");
-                AppUtils.pressEnterToContinue();
+        if (userLoggedIn instanceof Mahasiswa) {
+            MahasiswaService mhsService = new MahasiswaService((Mahasiswa) userLoggedIn);
+            showMahasiswaMenu(mhsService);
+        } else {
+            System.out.println("Login gagal! Cek kredensial.");
+            AppUtils.pressEnterToContinue();
         }
     }
 
@@ -132,7 +133,6 @@ public class Main {
         }
 
         AppUtils.pressEnterToContinue();
-
     }
 
     private static void showMahasiswaMenu(MahasiswaService mhsService) {
