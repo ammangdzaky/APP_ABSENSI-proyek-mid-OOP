@@ -120,7 +120,7 @@ public class Main {
         }
     }
 
-     private static void handleMahasiswaSignUp() {
+    private static void handleMahasiswaSignUp() {
         AppUtils.clearScreen();
         System.out.println("=== SIGN UP MAHASISWA ===");
 
@@ -132,5 +132,29 @@ public class Main {
         }
 
         AppUtils.pressEnterToContinue();
+
     }
 
+    private static void showMahasiswaMenu(MahasiswaService mhsService) {
+        IInfoAbsensi absensiService = mhsService;
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            AppUtils.clearScreen();
+            System.out.println("""
+            === MENU MAHASISWA ===
+            1. Absensi
+            2. Lihat Absensi Saya
+            3. Logout
+            """);
+
+            int choice = AppUtils.getValidIntInput("Pilih menu: ", 1, 3);
+
+            switch (choice) {
+                case 1 -> mhsService.absensi((Mahasiswa) userLoggedIn); // Tambahkan logika absensi
+                case 2 -> absensiService.infoAbsensi();
+                case 3 -> { return; }
+                default -> System.out.println("Pilihan tidak valid!");
+            }
+        }
+    }
+}
