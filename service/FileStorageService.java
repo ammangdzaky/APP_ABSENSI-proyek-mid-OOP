@@ -117,19 +117,23 @@ public class FileStorageService {
             return Files.readAllLines(Paths.get(ABSENSI_FILE)).stream()
                     .map(line -> {
                         String[] parts = line.split("\\|");
-                        // Cari mahasiswa dan matkul yang sudah ada
+                        // Skip line yang tidak valid
+                        if (parts.length < 4) return null;
+
                         Mahasiswa mhs = findMahasiswaByUsername(parts[0]);
                         MataKuliah matkul = findMataKuliahByNama(parts[1]);
 
-                        return new Absensi(
+                        // Hanya return absensi dengan matkul yang valid
+                        return (matkul != null) ? new Absensi(
                                 mhs != null ? mhs : new Mahasiswa(parts[0], ""),
-                                matkul != null ? matkul : new MataKuliah(parts[1], "", "", "", ""),
-                                parts[2], // status
-                                LocalDate.parse(parts[3]) // tanggal dari file
-                        );
+                                matkul,
+                                parts[2],
+                                LocalDate.parse(parts[3])
+                        ) : null;
                     })
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Error loading absensi: " + e.getMessage());
             return new ArrayList<>();
         }
@@ -165,7 +169,7 @@ public class FileStorageService {
         return loadMataKuliah().stream()
                 .filter(m -> m.getNama().equalsIgnoreCase(nama))
                 .findFirst()
-                .orElse(null);
+                .orElse(null); // Return null jika tidak ditemukan
     }
 
     // ======================= UTILITIES =======================
