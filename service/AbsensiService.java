@@ -25,6 +25,12 @@ public class AbsensiService {
                 System.out.println("⚠️ Bukan hari kuliah!");
                 return;
             }
+        }else {
+            // Untuk sakit/izin: validasi longgar
+            if (!matkul.isHariValid()) { // Cek hari saja, tidak perlu jam
+                System.out.println("⚠️ Absensi hanya bisa di hari kuliah!");
+                return;
+            }
         }
 
         // Cek apakah mahasiswa sudah absen hari ini
