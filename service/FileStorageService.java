@@ -182,4 +182,20 @@ public class FileStorageService {
     public static void clearAllMatkul() throws IOException {
         Files.deleteIfExists(Paths.get(MATKUL_FILE));
     }
+
+    public static void simpanSemuaMatkul(List<MataKuliah> matkulList) {
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                Paths.get(MATKUL_FILE),
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+
+            for (MataKuliah m : matkulList) {
+                writer.write(String.format("%s|%s|%s|%s|%s\n",
+                        m.getNama(), m.getHari(),
+                        m.getWaktuMulai(), m.getWaktuSelesai(),
+                        m.getToken()));
+            }
+        } catch (IOException e) {
+            System.err.println("Gagal menyimpan mata kuliah: " + e.getMessage());
+        }
+    }
 }

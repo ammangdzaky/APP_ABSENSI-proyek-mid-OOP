@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static util.AppUtils.scanner;
+
 public class DosenService implements IInfoAbsensi{
     // === FITUR SET MATA KULIAH & JADWAL ===
     public static void setMataKuliah() {
@@ -153,5 +155,41 @@ public class DosenService implements IInfoAbsensi{
     private static boolean isTimeOverlap(LocalTime start1, LocalTime end1,
         LocalTime start2, LocalTime end2) {
         return !start1.isAfter(end2) && !start2.isAfter(end1);
+    }
+
+    public static void hapusMataKuliah() {
+        List<MataKuliah> matkulList = FileStorageService.loadMataKuliah();
+
+        if (matkulList.isEmpty()) {
+            System.out.println("❌ Tidak ada mata kuliah terdaftar!");
+            return;
+        }
+
+        // Tampilkan daftar
+        System.out.println("\n=== DAFTAR MATA KULIAH ===");
+        for (int i = 0; i < matkulList.size(); i++) {
+            MataKuliah m = matkulList.get(i);
+            System.out.printf("%d. %s | %s | %s-%s\n",
+                    i+1, m.getNama(), m.getHariFormatted(),
+                    m.getWaktuMulai(), m.getWaktuSelesai());
+        }
+
+        // Pilih matkul
+        int choice = AppUtils.getValidIntInput(
+                "\nPilih mata kuliah yang akan dihapus (1-" + matkulList.size() + "): ",
+                1, matkulList.size());
+
+        // Konfirmasi
+        String namaMatkul = matkulList.get(choice-1).getNama();
+        System.out.print("Yakin hapus " + namaMatkul + "? (y/n): ");
+        String confirm = scanner.nextLine();
+
+        if (confirm.equalsIgnoreCase("y")) {
+            matkulList.remove(choice-1);
+            FileStorageService.simpanSemuaMatkul(matkulList); // Method baru
+            System.out.println("✅ Mata kuliah berhasil dihapus!");
+        } else {
+            System.out.println("❌ Penghapusan dibatalkan");
+        }
     }
 }
