@@ -55,6 +55,11 @@ public class MahasiswaService implements IInfoAbsensi{
                         matkul.getWaktuMulai() + "-" + matkul.getWaktuSelesai());
                 return;
             }
+        }else { // Untuk sakit/izin
+            if (!matkul.isHariValid()) { // Hanya cek hari
+                System.out.println("⚠️ Absensi hanya bisa di hari kuliah!");
+                return;
+            }
         }
 
         Absensi absensi = new Absensi(mahasiswa, matkul, status);

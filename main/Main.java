@@ -61,12 +61,12 @@ public class Main {
             AppUtils.clearScreen();
             System.out.println("""
             \n\n=== MENU DOSEN ===
-                1. Tambah Mata Kuliah
-                2. Lihat Daftar Matkul
-                3. Lihat Absensi
-                4. Update Token Matkul
-                5. Hapus Mata Kuliah  
-                6. Logout
+            1. Tambah Mata Kuliah
+            2. Lihat Daftar Matkul
+            3. Lihat Absensi
+            4. Update Token Matkul
+            5. Hapus Mata Kuliah  
+            6. Logout
             """);
 
             int choice = AppUtils.getValidIntInput("Pilih menu: ");

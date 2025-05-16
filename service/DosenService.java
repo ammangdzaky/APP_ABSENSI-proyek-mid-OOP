@@ -84,9 +84,11 @@ public class DosenService implements IInfoAbsensi{
         System.out.println("=================================");
 
         absensi.forEach(a -> {
+            // Ambil nama lengkap dari objek Mahasiswa
+            String namaLengkap = a.getMahasiswa().getNamaLengkap();
             System.out.printf(
                     "%s | STATUS: %s\n",
-                    a.getMahasiswa().getUsername(),
+                    namaLengkap.isEmpty() ? a.getMahasiswa().getUsername() : namaLengkap,
                     a.getStatus().toUpperCase()
             );
         });
