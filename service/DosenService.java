@@ -6,6 +6,7 @@ import util.AppUtils;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -68,8 +69,9 @@ public class DosenService implements IInfoAbsensi{
     @Override
     public void infoAbsensi(String token) {
         List<Absensi> absensi = FileStorageService.loadAbsensi().stream()
-                .filter(a -> a.getMataKuliah() != null &&
-                        a.getMataKuliah().getToken().equals(token))
+                .filter(Objects::nonNull)
+                .filter(a -> a.getMataKuliah() != null)
+                .filter(a -> a.getMataKuliah().getToken().equals(token))
                 .collect(Collectors.toList());
 
         if (absensi.isEmpty()) {
